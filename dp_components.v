@@ -33,12 +33,12 @@ module rxData(dataOut, load, shift, SCK, dataIn, done);
         buffer = 8'b0;
     end
 
-    always @(negedge SCK)begin
+    always @(posedge SCK)begin
         if(load) buffer <= dataIn;
-        else if(shift && !done)begin
+        else if(!done && shift)begin
             dataOut <= buffer[0];
-            buffer <= {0, buffer[7:1]};
-        end
+            buffer <= buffer >> 1;
+        end else buffer <= buffer;
     end
 endmodule
 
@@ -85,9 +85,9 @@ module SRAM(dataOut, dataIn, addr, WE);
     
     always@(*)begin
         if(WE)begin
-            sram[addr] <= dataIn;
+            sram[addr] = dataIn;
         end else begin
-            dataOut <= sram[addr];
+            dataOut = sram[addr];
         end
     end
 
