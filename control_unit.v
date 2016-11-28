@@ -76,7 +76,7 @@ module control_unit(count, WE, shiftRX, shiftAddr, shiftTX, loadRX, WR, SCK, ss,
                 end
             WRITE: begin 
                     count = 1; instrShift = 0;
-                    if(done) begin WE = 1; shiftTX = 0; end
+                    if(done) begin WE = 0; shiftTX = 0; end
                     else begin WE = 0; shiftTX = 1; end
                     shiftRX = 0; shiftAddr = 0; loadRX = 0; 
                 end
